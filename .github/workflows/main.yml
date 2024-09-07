@@ -13,11 +13,6 @@ jobs:
     # aqui é iniciado o passo a passo para realizar o processo de publicação
     steps:
       - uses: actions/checkout@v3
-      - name: Restaurando os pacotes/dependências NODE
-        run: npm install 
-      
-      - name: Executar Build
-        run: npm run build 
         
       - name: Conectar via SSH no servidor de Produção e transferir os arquivos resultantes da compilação
         run: |
@@ -25,7 +20,7 @@ jobs:
            echo "${{ secrets.KEY }}" > /tmp/private_key
            chmod 600 /tmp/private_key
            # Usa o arquivo temporário para a conexão SSH
-           scp -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ${{ github.workspace }}/build/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
+           scp -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ${{ github.workspace }}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
            # Opcional: Limpa o arquivo de chave privada após uso
            rm /tmp/private_key
 
