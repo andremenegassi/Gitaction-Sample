@@ -21,6 +21,6 @@ jobs:
            echo "${{ secrets.KEY }}" > /tmp/private_key
            chmod 600 /tmp/private_key
            # Usa o arquivo temporário para a conexão SSH
-           scp -i /tmp/private_key -r ${CAMINHO_PROJETO_PASTA_COMPILACAO}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
+           ssh -i /tmp/private_key ubuntu@${{ secrets.HOST }}
            # Opcional: Limpa o arquivo de chave privada após uso
            rm /tmp/private_key
