@@ -12,33 +12,7 @@ jobs:
 
     # aqui é iniciado o passo a passo para realizar o processo de publicação
     steps:
-      # esse primeiro passo é onde o nosso repositório será clonado na máquina disponibilizada pelo Github
-      - name: Sincronizando com o Github
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Restaurando os pacotes/dependências NODE
+        run: npm install 
 
-      # processo de transferência dos arquivos da máquina do Github 
-      # para o nosso servidor onde a aplicação será publicada
-      - name: Publicando
-        uses: SamKirkland/web-deploy@v1
-        with:
-          # host da nossa máquina
-          target-server: ${{ secrets.host }}
-          # usuário de acesso na nossa máquina
-          remote-user: ubuntu
-          # chave de acesso da nossa máquina
-          private-ssh-key: ${{ secrets.key }}
-          # caminho na nossa máquina para onde os arquivos serão transferidos
-          destination-path: /home/ubuntu/deploy-automatico/
-
-        # feito a transferência dos arquivos, precisamos dar um restart no PM2 
-        # para que ele suba os novos arquivos
-        # para isso iremos utilizar uma conexão SSH para rodarmos o comando restart do PM2
-      - name: Aplicando as mudanças
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-           host: ${{ secrets.host }}
-           username: ubuntu
-           key: ${{ secrets.key }}
-           port: 22
-           # server é nome da nossa aplicação no PM2
-           script: pm2 restart server
