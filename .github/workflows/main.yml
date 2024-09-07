@@ -13,6 +13,11 @@ jobs:
     # aqui é iniciado o passo a passo para realizar o processo de publicação
     steps:
       - uses: actions/checkout@v3
+
+      - name: Criando o diretório da App
+        run: |
+               ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} \
+               sudo sudo mkdir -p /home/ubuntu/appdemo1
         
       - name: Conectar via SSH no servidor de Produção e transferir os arquivos resultantes da compilação
         run: |
