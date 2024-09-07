@@ -19,4 +19,9 @@ jobs:
         run: |
            # Cria um arquivo temporário para a chave privada
            echo "${{ secrets.KEY }}" 
-           
+           chmod 600 /tmp/private_key /tmp/private_key
+           # Usa o arquivo temporário para a conexão SSH
+           ssh -i /tmp/private_key ubuntu@${{ secrets.HOST }}
+           # Opcional: Limpa o arquivo de chave privada após uso
+           rm /tmp/private_key
+
