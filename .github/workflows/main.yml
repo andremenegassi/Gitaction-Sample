@@ -19,5 +19,5 @@ jobs:
         env:
           CAMINHO_PROJETO_PASTA_COMPILACAO: ${{ github.workspace }}/build
         run: |
-             scp -i ${{ secrets.key }} -r ${CAMINHO_PROJETO_PASTA_COMPILACAO}/* ubuntu@${{ secrets.host }}:/home/ubuntu/appdemo1
+             scp -i ${{ secrets.KEY }} -r ${CAMINHO_PROJETO_PASTA_COMPILACAO}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
 
