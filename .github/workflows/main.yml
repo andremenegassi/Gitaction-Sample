@@ -21,6 +21,9 @@ jobs:
            chmod 600 /tmp/private_key
            # Usa o arquivo temporário para a conexão SSH
            scp -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ${{ github.workspace }}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
+           
+           run: |
+               ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+               npm install --prefix /home/ubuntu/appdemo1
            # Opcional: Limpa o arquivo de chave privada após uso
            rm /tmp/private_key
-
