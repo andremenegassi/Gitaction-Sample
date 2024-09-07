@@ -5,7 +5,6 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   build:
     # sistema operacional da máquina que o Github irá disponibilizar para rodar o nosso script
@@ -31,15 +30,15 @@ jobs:
           # caminho na nossa máquina para onde os arquivos serão transferidos
           destination-path: /home/ubuntu/deploy-automatico/
 
-      # feito a transferência dos arquivos, precisamos dar um restart no PM2 
-      # para que ele suba os novos arquivos
-      # para isso iremos utilizar uma conexão SSH para rodarmos o comando restart do PM2
+        # feito a transferência dos arquivos, precisamos dar um restart no PM2 
+        # para que ele suba os novos arquivos
+        # para isso iremos utilizar uma conexão SSH para rodarmos o comando restart do PM2
       - name: Aplicando as mudanças
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.host }}
-          username: ubuntu
-          key: ${{ secrets.key }}
-          port: 22
-          # server é nome da nossa aplicação no PM2
-          script: pm2 restart server
+           host: ${{ secrets.host }}
+           username: ubuntu
+           key: ${{ secrets.key }}
+           port: 22
+           # server é nome da nossa aplicação no PM2
+           script: pm2 restart server
