@@ -21,7 +21,7 @@ jobs:
            echo "${{ secrets.KEY }}" > /tmp/private_key
            chmod 600 /tmp/private_key
            # Usa o arquivo temporário para a conexão SSH
-           ssh -i /tmp/private_key ubuntu@${{ secrets.HOST }}
+           ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ubuntu@${{ secrets.HOST }}
            # Opcional: Limpa o arquivo de chave privada após uso
            rm /tmp/private_key
 
