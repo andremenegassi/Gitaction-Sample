@@ -16,8 +16,6 @@ jobs:
       - name: Restaurando os pacotes/dependências NODE
         run: npm install 
       - name: Conectar via SSH no servidor de Produção e transferir os arquivos resultantes da compilação
-        env:
-          CAMINHO_PROJETO_PASTA_COMPILACAO: ${{ github.workspace }}/build
         run: |
               echo ${{ secrets.KEY }} \
               ssh -i /dev/stdin ubuntu@${{ secrets.HOST }} 
