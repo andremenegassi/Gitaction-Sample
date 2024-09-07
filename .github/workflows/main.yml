@@ -25,8 +25,8 @@ jobs:
       - name: xxxx
         run: |
                ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} \
-               npm install --prefix /home/ubuntu/appdemo1 \
-               pm2 restart server
+               sudo npm install --prefix /home/ubuntu/appdemo1 \
+               sudo pm2 restart server
                
       - name: Limpa o arquivo de chave privada após uso
         run: |
