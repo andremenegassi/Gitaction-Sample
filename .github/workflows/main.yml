@@ -15,4 +15,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Restaurando os pacotes/dependências NODE
         run: npm install 
+      - name: Conectar via SSH no servidor de Produção e transferir os arquivos resultantes da compilação
+        env:
+          CAMINHO_PROJETO_PASTA_COMPILACAO: ${{ github.workspace }}/build
+        run: |
+             scp -i ${{ secrets.key }} -r ${CAMINHO_PROJETO_PASTA_COMPILACAO}/* ubuntu@${{ secrets.host }}:/home/ubuntu/appdemo1
 
