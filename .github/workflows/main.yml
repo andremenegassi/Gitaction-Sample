@@ -19,5 +19,5 @@ jobs:
         env:
           CAMINHO_PROJETO_PASTA_COMPILACAO: ${{ github.workspace }}/build
         run: |
-              echo ${{ secrets.KEY }} | scp -i /dev/stdin -r ${CAMINHO_PROJETO_PASTA_COMPILACAO}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
+              echo ${{ secrets.KEY }} | ssh -i /dev/stdin ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
 
