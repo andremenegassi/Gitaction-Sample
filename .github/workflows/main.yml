@@ -16,12 +16,14 @@ jobs:
       - name: Restaurando os pacotes/dependências NODE
         run: npm install 
       - name: Conectar via SSH no servidor de Produção e transferir os arquivos resultantes da compilação
+        env:
+          CAMINHO_PROJETO_PASTA_COMPILACAO: ${{ github.workspace }}/build
         run: |
            # Cria um arquivo temporário para a chave privada
            echo "${{ secrets.KEY }}" > /tmp/private_key
            chmod 600 /tmp/private_key
            # Usa o arquivo temporário para a conexão SSH
-           ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ubuntu@${{ secrets.HOST }}
+           scp -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ${CAMINHO_PROJETO_PASTA_COMPILACAO}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/aapdemo1
            # Opcional: Limpa o arquivo de chave privada após uso
            rm /tmp/private_key
 
