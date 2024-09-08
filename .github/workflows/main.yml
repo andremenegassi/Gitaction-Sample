@@ -23,7 +23,8 @@ jobs:
         run: |
                ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} \
                # Criando o diretório da aplicação \
-               sudo mkdir -p /home/ubuntu/appdemo1 && sudo chown -R ubuntu:ubuntu /home/ubuntu/appdemo1 \
+               sudo mkdir -p /home/ubuntu/appdemo1 \
+               sudo chmod -R 755 /home/ubuntu/appdemo1 \
 
                # Transferindo os arquivos da aplicação
                scp -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ${{ github.workspace }}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
