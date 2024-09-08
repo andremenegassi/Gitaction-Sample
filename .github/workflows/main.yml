@@ -1,5 +1,5 @@
 name: Publicação automática
-on: [workflow_dispatch]
+on:  
   # nosso script será executado sempre quando houver push e pull request nas branches destacadas abaixo
   push:
     branches: [ "main" ]
