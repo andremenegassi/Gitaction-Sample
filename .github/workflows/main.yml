@@ -19,18 +19,25 @@ jobs:
                echo "${{ secrets.KEY }}" > /tmp/private_key
                chmod 600 /tmp/private_key
 
-      - name: Ajustar permissões no servidor de Produção
-        run: |
-          ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} "sudo chown -R ubuntu:ubuntu /home/ubuntu/appdemo1 && sudo chmod -R 755 /home/ubuntu/appdemo1"
-                     
-      - name: Publicando...
+      - name: Criando a pasta da aplicação e acertando diretório...
         run: |
                ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} \
                # Criando o diretório da aplicação \
                sudo mkdir -p /home/ubuntu/appdemo1 \
 
-               # Transferindo os arquivos da aplicação
+      - name: Ajustar permissões no servidor de Produção
+        run: |
+          ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} "sudo chown -R ubuntu:ubuntu /home/ubuntu/appdemo1 && sudo chmod -R 755 /home/ubuntu/appdemo1"
+                     
+      - name: Transferindo os arquivos da aplicação
+        run: |
                scp -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ${{ github.workspace }}/* ubuntu@${{ secrets.HOST }}:/home/ubuntu/appdemo1
+
+      - name: xxxx
+        run: |
+               ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} \
+               sudo npm install --prefix /home/ubuntu/appdemo1 \
+               sudo pm2 restart server
 
       - name: Limpa o arquivo de chave privada após uso
         run: |
