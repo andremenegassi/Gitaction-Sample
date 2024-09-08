@@ -14,13 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Criando o diretório da App
+      - name: Cria um arquivo temporário para a chave privada
         run: |
-               # Cria um arquivo temporário para a chave privada
                echo "${{ secrets.KEY }}" > /tmp/private_key
                chmod 600 /tmp/private_key
+               
+      - name: Criando o diretório da App
+        run: |
                ssh -i /tmp/private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.HOST }} \
-               sudo mkdir -p /home/ubuntu/appdemo1
+               sudo mkdir -p /home/ubuntu/appdemo1               
         
       - name: Limpa o arquivo de chave privada após uso
         run: |
